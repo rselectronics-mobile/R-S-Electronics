@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R.S. Electronics | Premium Mobile Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   DESIGN TOKENS
+   ============================================= */
+:root {
+  --gold:       #c9963d;
+  --gold-lt:    #e8bf78;
+  --gold-dk:    #7a5c22;
+  --gold-grad:  linear-gradient(110deg,#a06a1b 0%,#e8bf78 45%,#c9963d 65%,#f0d080 80%,#a06a1b 100%);
+  --ink:        #0b0a08;
+  --ink2:       #141210;
+  --ink3:       #1e1c18;
+  --ink4:       #282520;
+  --cream:      #f5efe2;
+  --muted:      #6b6354;
+  --rule:       rgba(201,150,61,.15);
+  --rule2:      rgba(201,150,61,.28);
+  --serif:      'Cormorant Garamond',Georgia,serif;
+  --sans:       'DM Sans',system-ui,sans-serif;
+  --mono:       'DM Mono',monospace;
+}
+
+/* =============================================
+   RESET
+   ============================================= */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--ink);color:var(--cream);font-family:var(--sans);font-weight:400;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%;height:100%;object-fit:cover}
+button{cursor:pointer;font-family:var(--sans)}
+input,select,textarea{font-family:var(--sans)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--gold-dk);border-radius:2px}
+
+/* =============================================
+   UTILITIES
+   ============================================= */
+.gold-text{
+  background:var(--gold-grad);
+  background-size:220% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:shimmer 5s linear infinite;
+}
+@keyframes shimmer{to{background-position:220% center}}
+
+.gold-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 28px;
+  background:var(--gold-grad);background-size:200% auto;
+  color:var(--ink);font-family:var(--sans);font-weight:600;font-size:13px;
+  letter-spacing:.07em;text-transform:uppercase;
+  border:none;border-radius:5px;
+  transition:background-position .4s,box-shadow .3s,transform .2s;
+  box-shadow:0 4px 18px rgba(201,150,61,.32);
+}
+.gold-btn:hover{background-position:right center;box-shadow:0 8px 28px rgba(201,150,61,.5);transform:translateY(-1px)}
+
+.sec-label{
+  font-family:var(--mono);font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:10px;margin-bottom:10px;
+}
+.sec-label::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
+
+/* =============================================
+   LOADER
+   ============================================= */
+#loader{
+  position:fixed;inset:0;z-index:9999;background:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  transition:opacity .7s,visibility .7s;
+}
+#loader.gone{opacity:0;visibility:hidden}
+.ld-logo{font-family:var(--serif);font-size:38px;font-weight:700}
+.ld-bar-bg{width:160px;height:2px;background:rgba(201,150,61,.15);border-radius:2px;overflow:hidden}
+.ld-bar{width:0;height:100%;background:linear-gradient(90deg,#a06a1b,#e8bf78);animation:ldanim 2s ease forwards}
+@keyframes ldanim{to{width:100%}}
+.ld-txt{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--muted)}
+
+/* =============================================
+   HEADER
+   ============================================= */
+header{
+  position:sticky;top:0;z-index:600;
+  background:rgba(11,10,8,.93);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--rule);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 4%;height:68px;gap:18px}
+.logo-wrap{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.logo-img{width:46px;height:46px;border-radius:8px;border:1px solid var(--rule2);object-fit:cover;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--ink3)}
+.logo-img img{width:100%;height:100%;object-fit:cover;border-radius:7px}
+.logo-img .logo-placeholder{font-size:20px;color:var(--gold);font-family:var(--serif);font-weight:700}
+.logo-text{font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:1px}
+
+.nav-links{display:flex;align-items:center;gap:26px;list-style:none}
+.nav-links a{
+  font-size:12px;font-weight:500;letter-spacing:.04em;
+  color:rgba(245,239,226,.55);transition:color .2s;position:relative;
+}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:100%;height:1px;background:var(--gold);transition:right .3s}
+.nav-links a:hover{color:var(--cream)}
+.nav-links a:hover::after{right:0}
+
+.search-box{
+  display:flex;align-items:center;flex:1;max-width:320px;
+  background:var(--ink3);border:1px solid var(--rule);border-radius:4px;overflow:hidden;
+  transition:border-color .3s,box-shadow .3s;
+}
+.search-box:focus-within{border-color:rgba(201,150,61,.5);box-shadow:0 0 0 3px rgba(201,150,61,.07)}
+.search-box input{flex:1;padding:9px 14px;background:transparent;border:none;outline:none;color:var(--cream);font-size:13px}
+.search-box input::placeholder{color:var(--muted)}
+.search-box button{padding:9px 14px;background:transparent;border:none;border-left:1px solid var(--rule);color:var(--gold);font-size:15px;transition:background .2s}
+.search-box button:hover{background:rgba(201,150,61,.1)}
+
+.hamburger{display:none;background:none;border:none;padding:4px;cursor:pointer}
+.hamburger span{display:block;width:20px;height:1.5px;background:var(--cream);margin:4px 0;border-radius:2px;transition:all .3s}
+
+/* =============================================
+   HERO SLIDER
+   ============================================= */
+.hero-slider{position:relative;overflow:hidden;height:520px}
+.slide{
+  position:absolute;inset:0;opacity:0;transition:opacity .9s ease;
+  display:grid;grid-template-columns:1fr 1fr;align-items:center;
+  padding:0 6%;
+}
+.slide.active{opacity:1;z-index:1}
+.slide-bg{position:absolute;inset:0;z-index:0}
+.slide-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,10,8,.9) 0%,rgba(11,10,8,.5) 60%,transparent 100%)}
+.slide-content{position:relative;z-index:2}
+.slide-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.slide-eyebrow::before{content:'';display:block;width:30px;height:1px;background:var(--gold)}
+.slide h1{font-family:var(--serif);font-size:clamp(36px,5vw,70px);font-weight:700;line-height:1.05;margin-bottom:16px}
+.slide-sub{font-size:14px;color:rgba(245,239,226,.6);line-height:1.7;max-width:400px;margin-bottom:28px}
+.slide-price-tag{
+  display:inline-block;padding:6px 16px;border:1px solid var(--rule2);border-radius:4px;
+  background:rgba(201,150,61,.08);font-family:var(--serif);font-size:28px;font-weight:700;
+  margin-bottom:24px;
+}
+.slide-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.slide-visual{position:relative;z-index:2;display:flex;align-items:center;justify-content:center}
+.slide-img-frame{
+  width:220px;height:380px;border-radius:36px;
+  background:linear-gradient(160deg,var(--ink3),var(--ink));
+  border:1px solid var(--rule2);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(201,150,61,.08);
+  animation:float 4s ease-in-out infinite;
+}
+.slide-img-frame img{width:100%;height:100%;object-fit:contain}
+.slide-img-frame .no-img{font-size:90px;filter:drop-shadow(0 10px 30px rgba(0,0,0,.8))}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* Slider controls */
+.slider-dots{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  display:flex;gap:8px;z-index:10;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(201,150,61,.3);cursor:pointer;transition:all .3s}
+.dot.on{background:var(--gold);width:20px;border-radius:3px}
+.slider-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  z-index:10;width:40px;height:40px;border-radius:50%;
+  background:rgba(11,10,8,.7);border:1px solid var(--rule2);
+  color:var(--gold);font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);transition:all .2s;
+}
+.slider-arrow:hover{background:rgba(201,150,61,.15);border-color:var(--gold)}
+.arrow-left{left:16px}
+.arrow-right{right:16px}
+
+/* =============================================
+   TICKER
+   ============================================= */
+.ticker{
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  background:var(--ink2);overflow:hidden;padding:10px 0;
+}
+.ticker-inner{display:flex;width:max-content;animation:tick 28s linear infinite}
+.ticker-inner:hover{animation-play-state:paused}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick-item{display:inline-flex;align-items:center;gap:10px;padding:0 28px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.tick-item .ga{color:var(--gold)}
+.tick-sep{color:var(--gold-dk)}
+
+/* =============================================
+   BRAND STRIP
+   ============================================= */
+.brand-strip{
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:40px;padding:36px 4%;
+  border-bottom:1px solid var(--rule);
+}
+.brand-name{
+  font-family:var(--serif);font-size:18px;font-weight:700;
+  letter-spacing:2px;color:rgba(245,239,226,.15);
+  transition:color .3s;cursor:default;user-select:none;
+}
+.brand-name:hover{color:rgba(245,239,226,.45)}
+
+/* =============================================
+   FILTER BAR
+   ============================================= */
+.filter-bar{
+  padding:36px 4% 0;display:flex;
+  align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;
+}
+.filter-bar h2{font-family:var(--serif);font-size:clamp(26px,4vw,44px);font-weight:700}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{
+  padding:7px 18px;border-radius:30px;border:1px solid var(--rule2);
+  background:transparent;color:rgba(245,239,226,.45);
+  font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  transition:all .25s;
+}
+.pill:hover{border-color:rgba(201,150,61,.45);color:var(--cream)}
+.pill.on{
+  background:var(--gold-grad);background-size:200% auto;
+  border-color:transparent;color:var(--ink);
+  box-shadow:0 4px 16px rgba(201,150,61,.35);
+}
+.sort-sel{
+  background:var(--ink3);border:1px solid var(--rule);
+  color:rgba(245,239,226,.55);padding:7px 12px;
+  border-radius:4px;font-size:11px;outline:none;
+}
+
+/* =============================================
+   PRODUCT GRID
+   ============================================= */
+.pgrid{
+  padding:24px 4% 60px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:22px;
+}
+
+.pcard{
+  background:var(--ink2);border:1px solid var(--rule);border-radius:14px;
+  overflow:hidden;position:relative;
+  display:flex;flex-direction:column;
+  transition:transform .35s,box-shadow .35s,border-color .35s;
+}
+.pcard:hover{transform:translateY(-6px);box-shadow:0 18px 48px rgba(0,0,0,.5),0 0 0 1px rgba(201,150,61,.22);border-color:rgba(201,150,61,.28)}
+
+.pbadge{
+  position:absolute;top:12px;left:12px;z-index:3;
+  padding:3px 9px;border-radius:3px;font-family:var(--mono);
+  font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;
+}
+.pbadge.new{background:var(--gold);color:var(--ink)}
+.pbadge.hot{background:#b33c3c;color:#fff}
+.pbadge.sale{background:#2b6e3a;color:#fff}
+
+.pwish{
+  position:absolute;top:12px;right:12px;z-index:3;
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(11,10,8,.7);border:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+  transition:all .2s;backdrop-filter:blur(4px);
+}
+.pwish:hover,.pwish.on{background:rgba(201,150,61,.15);border-color:var(--gold)}
+
+/* Product image */
+.pimg{
+  width:100%;height:220px;background:var(--ink3);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;
+}
+.pimg::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 100%,rgba(201,150,61,.07),transparent 60%);
+  pointer-events:none;
+}
+.pimg img{width:100%;height:100%;object-fit:contain;transition:transform .5s;position:relative;z-index:1}
+.pcard:hover .pimg img{transform:scale(1.06)}
+.pimg .emoji-ph{font-size:80px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.8));transition:transform .5s}
+.pcard:hover .pimg .emoji-ph{transform:scale(1.06) rotate(-3deg)}
+
+.pinfo{padding:18px 18px 0;flex:1;display:flex;flex-direction:column;gap:6px}
+.pbrand{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
+.pname{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--cream);line-height:1.2}
+.pspecs{font-size:11px;color:var(--muted);line-height:1.6}
+.prating{display:flex;align-items:center;gap:6px}
+.stars{color:var(--gold);font-size:11px;letter-spacing:1px}
+.rcount{font-size:10px;color:var(--muted)}
+
+.pfoot{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;margin-top:12px;border-top:1px solid var(--rule);
+}
+.pprice-box{}
+.pprice{font-family:var(--serif);font-size:22px;font-weight:700}
+.pold{font-size:10px;color:var(--muted);text-decoration:line-through}
+
+.pbuy{
+  padding:9px 16px;border-radius:5px;
+  background:linear-gradient(135deg,#a06a1b,#ddb962);
+  color:var(--ink);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  border:none;transition:box-shadow .25s,transform .2s;
+}
+.pbuy:hover{box-shadow:0 6px 20px rgba(201,150,61,.4);transform:translateY(-1px)}
+
+/* =============================================
+   FEATURED BANNER
+   ============================================= */
+.feat-banner{
+  margin:0 4% 60px;border-radius:18px;
+  background:linear-gradient(120deg,var(--ink3) 0%,var(--ink2) 60%,rgba(201,150,61,.05) 100%);
+  border:1px solid rgba(201,150,61,.18);padding:52px;
+  display:grid;grid-template-columns:1fr auto;gap:36px;align-items:center;
+  overflow:hidden;position:relative;
+}
+.feat-banner::before{
+  content:'';position:absolute;right:-60px;top:-60px;
+  width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,150,61,.07),transparent 70%);
+  pointer-events:none;
+}
+.feat-tag{font-family:var(--mono);font-size:9px;letter-spacing:.22em;color:var(--gold);margin-bottom:10px}
+.feat-title{font-family:var(--serif);font-size:clamp(26px,4vw,46px);font-weight:700;line-height:1.1;margin-bottom:12px}
+.feat-desc{font-size:13px;color:rgba(245,239,226,.5);max-width:440px;margin-bottom:24px;line-height:1.7}
+.feat-visual{font-size:96px;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 20px 40px rgba(0,0,0,.6))}
+
+/* =============================================
+   WHY US
+   ============================================= */
+.why{padding:72px 4%;border-top:1px solid var(--rule)}
+.why-hd{text-align:center;margin-bottom:48px}
+.why-hd h2{font-family:var(--serif);font-size:clamp(28px,4vw,48px);font-weight:700;margin-top:10px}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.why-card{
+  padding:28px;border:1px solid var(--rule);border-radius:14px;background:var(--ink2);
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+}
+.why-card:hover{border-color:rgba(201,150,61,.28);transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.3)}
+.why-icon{width:48px;height:48px;border-radius:10px;background:rgba(201,150,61,.1);border:1px solid rgba(201,150,61,.2);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px}
+.why-card h3{font-family:var(--serif);font-size:18px;font-weight:600;margin-bottom:8px}
+.why-card p{font-size:12px;color:rgba(245,239,226,.45);line-height:1.7}
+
+/* =============================================
+   TESTIMONIALS
+   ============================================= */
+.testim{padding:72px 4%;border-top:1px solid var(--rule);background:var(--ink2)}
+.testim-hd{text-align:center;margin-bottom:44px}
+.testim-hd h2{font-family:var(--serif);font-size:clamp(26px,4vw,46px);font-weight:700;margin-top:10px}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.rev-card{
+  padding:26px;border:1px solid var(--rule);border-radius:14px;background:var(--ink3);position:relative;overflow:hidden;
+}
+.rev-card::before{
+  content:'"';position:absolute;top:-6px;right:16px;
+  font-family:var(--serif);font-size:110px;color:rgba(201,150,61,.05);line-height:1;pointer-events:none;
+}
+.rev-stars{color:var(--gold);font-size:13px;margin-bottom:12px}
+.rev-text{font-size:13px;color:rgba(245,239,226,.6);line-height:1.7;margin-bottom:18px}
+.reviewer{display:flex;align-items:center;gap:12px}
+.rev-ava{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold-dk),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:14px;font-weight:700;color:var(--ink);
+}
+.rev-name{font-size:13px;font-weight:600}
+.rev-loc{font-size:10px;color:var(--muted);font-family:var(--mono)}
+
+/* =============================================
+   BOOKING / CONTACT
+   ============================================= */
+.booking{
+  padding:72px 4%;border-top:1px solid var(--rule);
+  display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;
+}
+.bk-info h2{font-family:var(--serif);font-size:clamp(28px,4vw,46px);font-weight:700;line-height:1.1;margin:10px 0 18px}
+.bk-info p{font-size:13px;color:rgba(245,239,226,.5);line-height:1.8;margin-bottom:32px}
+.citem{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.citem-icon{font-size:18px;width:34px;flex-shrink:0;margin-top:2px}
+.clabel{font-size:9px;font-family:var(--mono);color:var(--gold);letter-spacing:.12em;text-transform:uppercase}
+.cval{font-size:13px;color:var(--cream);margin-top:3px}
+.cval a{color:var(--gold-lt);transition:color .2s}
+.cval a:hover{color:var(--gold)}
+
+/* Social links */
+.social-row{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.social-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 14px;border-radius:6px;border:1px solid var(--rule);
+  font-size:12px;font-weight:500;color:rgba(245,239,226,.55);
+  transition:all .25s;
+}
+.social-btn:hover{border-color:rgba(201,150,61,.4);color:var(--cream);background:rgba(201,150,61,.07)}
+.social-btn span{font-size:16px}
+
+/* Form card */
+.fcard{
+  background:var(--ink2);border:1px solid rgba(201,150,61,.18);
+  border-radius:16px;padding:36px;
+}
+.fcard h3{font-family:var(--serif);font-size:24px;font-weight:700;margin-bottom:26px;text-align:center}
+.field{margin-bottom:18px}
+.field label{display:block;margin-bottom:7px;font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,239,226,.45)}
+.field input,.field select,.field textarea{
+  width:100%;padding:13px 15px;background:var(--ink3);
+  border:1px solid var(--rule);color:var(--cream);font-size:13px;
+  border-radius:6px;outline:none;transition:border-color .25s,box-shadow .25s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(201,150,61,.5);box-shadow:0 0 0 3px rgba(201,150,61,.07)}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+.field select option{background:var(--ink3)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fsub{
+  width:100%;padding:15px;
+  background:var(--gold-grad);background-size:200% auto;
+  color:var(--ink);font-size:14px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  border:none;border-radius:6px;margin-top:6px;
+  transition:background-position .4s,box-shadow .3s,transform .2s;
+}
+.fsub:hover{background-position:right center;box-shadow:0 8px 28px rgba(201,150,61,.48);transform:translateY(-2px)}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+footer{background:var(--ink);border-top:1px solid var(--rule);padding:56px 4% 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:44px}
+.fbrand .logo-text{font-family:var(--serif);font-size:20px;font-weight:700;display:block;margin-bottom:14px}
+.fbrand p{font-size:12px;color:var(--muted);line-height:1.8;max-width:270px;margin-bottom:22px}
+.fsocial{display:flex;gap:8px;flex-wrap:wrap}
+.fsoc-btn{
+  width:34px;height:34px;border-radius:6px;border:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:center;font-size:15px;
+  color:var(--muted);transition:all .2s;
+}
+.fsoc-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,150,61,.08)}
+.fcol h4{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.fcol a{font-size:12px;color:var(--muted);transition:color .2s}
+.fcol a:hover{color:var(--cream)}
+.fbot{display:flex;justify-content:space-between;align-items:center;padding-top:22px;border-top:1px solid var(--rule);flex-wrap:wrap;gap:10px}
+.fbot p{font-size:11px;color:var(--muted);font-family:var(--mono)}
+
+/* =============================================
+   TOAST + SCROLL TOP
+   ============================================= */
+.toast{
+  position:fixed;bottom:28px;right:28px;z-index:8000;
+  background:var(--ink3);border:1px solid rgba(201,150,61,.28);border-radius:12px;
+  padding:14px 20px;display:flex;align-items:center;gap:10px;
+  box-shadow:0 10px 28px rgba(0,0,0,.45);max-width:280px;
+  transform:translateY(90px);opacity:0;transition:all .4s;
+}
+.toast.on{transform:translateY(0);opacity:1}
+.toast-txt{font-size:12px;font-weight:500}
+
+.scrtop{
+  position:fixed;bottom:28px;left:28px;z-index:8000;
+  width:42px;height:42px;border-radius:50%;
+  background:var(--ink3);border:1px solid rgba(201,150,61,.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.4);
+  opacity:0;pointer-events:none;transition:all .3s;
+}
+.scrtop.on{opacity:1;pointer-events:all}
+.scrtop:hover{background:rgba(201,150,61,.12);transform:translateY(-2px)}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media(max-width:960px){
+  .hero-slider{height:auto;min-height:400px}
+  .slide{grid-template-columns:1fr;padding:60px 5% 40px;text-align:center}
+  .slide-eyebrow{justify-content:center}
+  .slide-sub{margin:0 auto 24px}
+  .slide-actions{justify-content:center}
+  .slide-visual{display:none}
+  .booking{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .feat-banner{grid-template-columns:1fr;padding:36px}
+  .feat-visual{display:none}
+}
+@media(max-width:600px){
+  .nav-links{display:none}
+  .hamburger{display:block}
+  .pgrid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;padding:16px 3% 40px}
+  .pimg{height:160px}
+  .pname{font-size:14px}
+  .pprice{font-size:17px}
+  .pbuy{font-size:10px;padding:7px 11px}
+  .pinfo{padding:12px 12px 0;gap:4px}
+  .pfoot{padding:10px 12px}
+  .footer-grid{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  .fcard{padding:22px 18px}
+  .filter-bar{flex-direction:column;align-items:flex-start}
+  .why-grid{grid-template-columns:1fr 1fr}
+  .toast{right:12px;bottom:16px;max-width:240px}
+  .scrtop{left:12px;bottom:16px}
+  .hero-slider{min-height:340px}
+  .slide h1{font-size:32px}
+}
+
+/* =============================================
+   ANIMATIONS
+   ============================================= */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-logo"><span class="gold-text">R.S. Electronics</span></div>
+  <div class="ld-bar-bg"><div class="ld-bar"></div></div>
+  <div class="ld-txt">LOADING COLLECTION…</div>
+</div>
+
+<!-- =============================================
+     HEADER
+     ============================================= -->
+<header>
+  <div class="nav">
+    <!-- LOGO: Google Drive Image Support -->
+    <div class="logo-wrap">
+      <div class="logo-img" id="logoImgWrap">
+        <!-- Replace LOGO_GDRIVE_ID with your Google Drive file ID -->
+        <!-- Example: https://drive.google.com/file/d/1aBcDeFgHiJkLmN/view -->
+        <!-- Then put: 1aBcDeFgHiJkLmN in LOGO_GDRIVE_ID below -->
+        <img
+          src="https://drive.google.com/thumbnail?id=LOGO_GDRIVE_ID&sz=w200"
+          alt="R.S. Electronics Logo"
+          onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'"
+          style="width:100%;height:100%;border-radius:7px;object-fit:cover"
+        >
+        <div class="logo-placeholder" id="logoFallback" style="display:none">RS</div>
+      </div>
+      <div class="logo-text"><span class="gold-text">R.S.</span> Electronics</div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#collection">Collection</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search mobiles…" oninput="searchProducts()">
+      <button>🔍</button>
+    </div>
+
+    <button class="hamburger" id="menuBtn" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- =============================================
+     HERO SLIDER
+     HOW TO ADD YOUR IMAGES:
+     Replace SLIDE_1_ID, SLIDE_2_ID etc. with
+     your Google Drive file IDs
+     ============================================= -->
+<section class="hero-slider" id="heroSlider">
+
+  <!-- SLIDE 1 – iPhone 16 Pro Max -->
+  <div class="slide active" id="slide0">
+    <div class="slide-bg">
+      <!-- Replace SLIDE_BG_1 with your background Google Drive image ID -->
+      <img src="https://drive.google.com/thumbnail?id=SLIDE_BG_1&sz=w1600" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.18" onerror="this.style.display='none'">
+    </div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <div class="slide-eyebrow">⚡ Just Launched</div>
+      <h1>iPhone 16<br><span class="gold-text">Pro Max</span></h1>
+      <div class="slide-price-tag"><span class="gold-text">₹1,74,900</span></div>
+      <p class="slide-sub">A18 Pro · Titanium Design · 5× Optical Zoom · Camera Control</p>
+      <div class="slide-actions">
+        <button class="gold-btn" onclick="bookNow('iPhone 16 Pro Max')">Book Now →</button>
+        <a href="#collection" style="font-size:13px;color:var(--gold-lt);border-bottom:1px solid rgba(232,191,120,.35);padding-bottom:2px">View All →</a>
+      </div>
+    </div>
+    <div class="slide-visual">
+      <div class="slide-img-frame">
+        <!-- Replace PHONE_IMG_1 with Google Drive ID of iPhone image -->
+        <img src="https://drive.google.com/thumbnail?id=PHONE_IMG_1&sz=w400" alt="iPhone 16 Pro Max" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <div class="no-img" style="display:none">📱</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 – Samsung S25 Ultra -->
+  <div class="slide" id="slide1">
+    <div class="slide-bg">
+      <img src="https://drive.google.com/thumbnail?id=SLIDE_BG_2&sz=w1600" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.18" onerror="this.style.display='none'">
+    </div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <div class="slide-eyebrow">🌟 Bestseller</div>
+      <h1>Galaxy S25<br><span class="gold-text">Ultra</span></h1>
+      <div class="slide-price-tag"><span class="gold-text">₹1,34,999</span></div>
+      <p class="slide-sub">Snapdragon 8 Elite · 200MP Camera · S Pen Included · 5000mAh</p>
+      <div class="slide-actions">
+        <button class="gold-btn" onclick="bookNow('Samsung Galaxy S25 Ultra')">Book Now →</button>
+        <a href="#collection" style="font-size:13px;color:var(--gold-lt);border-bottom:1px solid rgba(232,191,120,.35);padding-bottom:2px">View All →</a>
+      </div>
+    </div>
+    <div class="slide-visual">
+      <div class="slide-img-frame">
+        <img src="https://drive.google.com/thumbnail?id=PHONE_IMG_2&sz=w400" alt="Galaxy S25 Ultra" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <div class="no-img" style="display:none">📲</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 – Vivo X200 Pro -->
+  <div class="slide" id="slide2">
+    <div class="slide-bg">
+      <img src="https://drive.google.com/thumbnail?id=SLIDE_BG_3&sz=w1600" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.18" onerror="this.style.display='none'">
+    </div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <div class="slide-eyebrow">🔥 Hot Deal</div>
+      <h1>Vivo X200<br><span class="gold-text">Pro</span></h1>
+      <div class="slide-price-tag"><span class="gold-text">₹94,999</span></div>
+      <p class="slide-sub">Dimensity 9400 · Zeiss Camera · 90W Fast Charge · Titanium Frame</p>
+      <div class="slide-actions">
+        <button class="gold-btn" onclick="bookNow('Vivo X200 Pro')">Book Now →</button>
+        <a href="#collection" style="font-size:13px;color:var(--gold-lt);border-bottom:1px solid rgba(232,191,120,.35);padding-bottom:2px">View All →</a>
+      </div>
+    </div>
+    <div class="slide-visual">
+      <div class="slide-img-frame">
+        <img src="https://drive.google.com/thumbnail?id=PHONE_IMG_3&sz=w400" alt="Vivo X200 Pro" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <div class="no-img" style="display:none">📳</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 – Oppo Find X8 Pro -->
+  <div class="slide" id="slide3">
+    <div class="slide-bg">
+      <img src="https://drive.google.com/thumbnail?id=SLIDE_BG_4&sz=w1600" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.18" onerror="this.style.display='none'">
+    </div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <div class="slide-eyebrow">✨ Premium Pick</div>
+      <h1>Oppo Find<br><span class="gold-text">X8 Pro</span></h1>
+      <div class="slide-price-tag"><span class="gold-text">₹89,999</span></div>
+      <p class="slide-sub">Hasselblad Camera · Dimensity 9400 · IP69 Rated · 100W SuperVOOC</p>
+      <div class="slide-actions">
+        <button class="gold-btn" onclick="bookNow('Oppo Find X8 Pro')">Book Now →</button>
+        <a href="#collection" style="font-size:13px;color:var(--gold-lt);border-bottom:1px solid rgba(232,191,120,.35);padding-bottom:2px">View All →</a>
+      </div>
+    </div>
+    <div class="slide-visual">
+      <div class="slide-img-frame">
+        <img src="https://drive.google.com/thumbnail?id=PHONE_IMG_4&sz=w400" alt="Oppo Find X8 Pro" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <div class="no-img" style="display:none">📴</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arrows -->
+  <button class="slider-arrow arrow-left" onclick="moveSlide(-1)">&#8592;</button>
+  <button class="slider-arrow arrow-right" onclick="moveSlide(1)">&#8594;</button>
+
+  <!-- Dots -->
+  <div class="slider-dots" id="sliderDots">
+    <div class="dot on" onclick="goSlide(0)"></div>
+    <div class="dot" onclick="goSlide(1)"></div>
+    <div class="dot" onclick="goSlide(2)"></div>
+    <div class="dot" onclick="goSlide(3)"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="tick-item">📱 iPhone 16 Pro Max <span class="ga">₹1,74,900</span></span>
+    <span class="tick-item tick-sep">✦</span>
+    <span class="tick-item">📲 Galaxy S25 Ultra <span class="ga">₹1,34,999</span></span>
+    <span class="tick-item tick-sep">✦</span>
+    <span class="tick-item">📳 Vivo X200 Pro <span class="ga">₹94,999</span></span>
+    <span class="tick-item tick-sep">✦</span>
+    <span class="tick-item">📴 Oppo Find X8 Pro <span class="ga">₹89,999</span></span>
+    <span class="tick-item tick-sep">✦</span>
+    <span class="tick-item">🎉 EMI — 0% Interest Available</span>
+    <span class="tick-item tick-sep">✦</span>
+    <span class="tick-item">🚚 Free Delivery Pan India</span>
+    <span class="tick-item tick-sep">✦</span>
+    <span class="tick-item">📱 iPhone 16 Pro Max <span class="ga">₹1,74,900</span></span>
+    <span class="tick-item tick-sep">✦</span>
+    <span class="tick-item">📲 Galaxy S25 Ultra <span class="ga">₹1,34,999</span></span>
+    <span class="tick-item tick-sep">✦</span>
+    <span class="tick-item">📳 Vivo X200 Pro <span class="ga">₹94,999</span></span>
+    <span class="tick-item tick-sep">✦</span>
+    <span class="tick-item">📴 Oppo Find X8 Pro <span class="ga">₹89,999</span></span>
+    <span class="tick-item tick-sep">✦</span>
+    <span class="tick-item">🎉 EMI — 0% Interest Available</span>
+    <span class="tick-item tick-sep">✦</span>
+    <span class="tick-item">🚚 Free Delivery Pan India</span>
+  </div>
+</div>
+
+<!-- BRAND STRIP -->
+<div class="brand-strip">
+  <div class="brand-name">APPLE</div>
+  <div class="brand-name">SAMSUNG</div>
+  <div class="brand-name">VIVO</div>
+  <div class="brand-name">OPPO</div>
+  <div class="brand-name">ONEPLUS</div>
+  <div class="brand-name">REALME</div>
+</div>
+
+<!-- FEATURED BANNER -->
+<div class="feat-banner">
+  <div>
+    <div class="feat-tag">⚡ SPECIAL DEAL</div>
+    <div class="feat-title">iPhone 16 Pro Max<br><span class="gold-text">Titanium Edition</span></div>
+    <p class="feat-desc">The most powerful iPhone ever — A18 Pro chip, 5× optical zoom, and the all-new Camera Control. Exclusive pricing at R.S. Electronics.</p>
+    <button class="gold-btn" onclick="bookNow('iPhone 16 Pro Max – Titanium')">Reserve Now →</button>
+  </div>
+  <div class="feat-visual">📱</div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar" id="collection">
+  <div>
+    <div class="sec-label">Premium Collection</div>
+    <h2>Our <span class="gold-text">Phones</span></h2>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+    <div class="pills">
+      <button class="pill on" onclick="filterBrand('All',this)">All</button>
+      <button class="pill" onclick="filterBrand('Apple',this)">Apple</button>
+      <button class="pill" onclick="filterBrand('Samsung',this)">Samsung</button>
+      <button class="pill" onclick="filterBrand('Vivo',this)">Vivo</button>
+      <button class="pill" onclick="filterBrand('Oppo',this)">Oppo</button>
+    </div>
+    <select class="sort-sel" onchange="sortProducts(this.value)">
+      <option value="default">Sort: Default</option>
+      <option value="asc">Price: Low → High</option>
+      <option value="desc">Price: High → Low</option>
+    </select>
+  </div>
+</div>
+
+<!-- PRODUCT GRID -->
+<!--
+  ==========================================
+  HOW TO ADD YOUR PHONE IMAGES (Google Drive):
+  1. Upload image to Google Drive
+  2. Right-click → Share → Anyone with link → Copy
+  3. From URL: https://drive.google.com/file/d/FILEID/view
+     Copy only FILEID part
+  4. In PRODUCTS array below, set:
+     img: "FILEID"
+  ==========================================
+-->
+<div class="pgrid" id="pgrid"></div>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="why-hd">
+    <div class="sec-label">Why Choose Us</div>
+    <h2>The <span class="gold-text">R.S. Standard</span></h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal"><div class="why-icon">✅</div><h3>100% Genuine</h3><p>Every device is 100% authentic with full manufacturer warranty. We are authorized dealers for all major brands.</p></div>
+    <div class="why-card reveal"><div class="why-icon">💰</div><h3>Best Price</h3><p>Found a lower price anywhere? We match it. Wholesale rates for bulk orders — the more you buy, the more you save.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🚚</div><h3>Pan-India Delivery</h3><p>Fast, insured shipping across India. Orders above ₹50,000 get free priority delivery to your doorstep.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🔄</div><h3>Easy Exchange</h3><p>Upgrade your old phone hassle-free. Bring your device and get the best exchange value on the spot.</p></div>
+    <div class="why-card reveal"><div class="why-icon">💳</div><h3>0% EMI</h3><p>Easy EMI on all major credit cards. 3, 6, 9 and 12 month plans — zero processing fee on premium models.</p></div>
+    <div class="why-card reveal"><div class="why-icon">🎧</div><h3>After-Sale Support</h3><p>Our job doesn't end at delivery. Dedicated support for setup help, warranty claims, and any queries.</p></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testim" id="reviews">
+  <div class="testim-hd">
+    <div class="sec-label">Customer Reviews</div>
+    <h2>Loved by <span class="gold-text">Thousands</span></h2>
+  </div>
+  <div class="rev-grid">
+    <div class="rev-card reveal">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">"Best phone shop I've visited. Got iPhone 15 Pro Max at a price no one else could match. Genuine product, perfect packaging — couldn't be happier!"</p>
+      <div class="reviewer"><div class="rev-ava">R</div><div><div class="rev-name">Rahul Sharma</div><div class="rev-loc">📍 Delhi</div></div></div>
+    </div>
+    <div class="rev-card reveal">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">"Ordered 10 Samsung S24 Ultras for our shop. Bulk order processed same day, all units delivered perfectly sealed. Wholesale rates are unbeatable!"</p>
+      <div class="reviewer"><div class="rev-ava">P</div><div><div class="rev-name">Priya Mehta</div><div class="rev-loc">📍 Mumbai</div></div></div>
+    </div>
+    <div class="rev-card reveal">
+      <div class="rev-stars">★★★★★</div>
+      <p class="rev-text">"Amazing customer service. Helped me choose the right model, arranged 0% EMI in minutes, delivered next day. RS Electronics is my go-to for phones now."</p>
+      <div class="reviewer"><div class="rev-ava">A</div><div><div class="rev-name">Anil Kumar</div><div class="rev-loc">📍 Bangalore</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING + CONTACT -->
+<section class="booking" id="contact">
+  <div class="bk-info">
+    <div class="sec-label">Get In Touch</div>
+    <h2>Place Your <span class="gold-text">Order</span> Today</h2>
+    <p>Fill the form or reach us directly. We respond within 2 hours. Retail and wholesale orders welcome — no order too big or small.</p>
+
+    <!-- =============================================
+         CONTACT INFO — Edit your details below
+         ============================================= -->
+    <div class="citem">
+      <div class="citem-icon">📞</div>
+      <div>
+        <div class="clabel">Call / WhatsApp</div>
+        <!-- EDIT: Replace with your number -->
+        <div class="cval"><a href="tel:+919876543210">+91 98765 43210</a></div>
+      </div>
+    </div>
+    <div class="citem">
+      <div class="citem-icon">💬</div>
+      <div>
+        <div class="clabel">WhatsApp Chat</div>
+        <!-- EDIT: Replace 919876543210 with your WhatsApp number (country code + number) -->
+        <div class="cval"><a href="https://wa.me/919876543210?text=Hello%2C%20I%20want%20to%20book%20a%20phone" target="_blank">Chat on WhatsApp →</a></div>
+      </div>
+    </div>
+    <div class="citem">
+      <div class="citem-icon">📧</div>
+      <div>
+        <div class="clabel">Email</div>
+        <!-- EDIT: Replace with your email -->
+        <div class="cval"><a href="mailto:orders@rselectronics.in">orders@rselectronics.in</a></div>
+      </div>
+    </div>
+    <div class="citem">
+      <div class="citem-icon">📍</div>
+      <div>
+        <div class="clabel">Store Address</div>
+        <!-- EDIT: Replace with your address -->
+        <div class="cval">Shop No. 14, Electronics Market, Main Bazaar</div>
+      </div>
+    </div>
+    <div class="citem">
+      <div class="citem-icon">⏰</div>
+      <div>
+        <div class="clabel">Working Hours</div>
+        <div class="cval">Mon – Sat: 10:00 AM – 8:00 PM</div>
+      </div>
+    </div>
+
+    <!-- =============================================
+         SOCIAL MEDIA LINKS
+         EDIT: Replace # with your actual links
+         ============================================= -->
+    <div class="social-row">
+      <!-- WhatsApp -->
+      <a href="https://wa.me/919876543210" target="_blank" class="social-btn">
+        <span>💬</span> WhatsApp
+      </a>
+      <!-- Instagram -->
+      <a href="https://instagram.com/YOUR_INSTAGRAM" target="_blank" class="social-btn">
+        <span>📸</span> Instagram
+      </a>
+      <!-- Facebook -->
+      <a href="https://facebook.com/YOUR_FACEBOOK" target="_blank" class="social-btn">
+        <span>📘</span> Facebook
+      </a>
+      <!-- YouTube -->
+      <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="social-btn">
+        <span>▶</span> YouTube
+      </a>
+      <!-- Telegram (optional) -->
+      <a href="https://t.me/YOUR_TELEGRAM" target="_blank" class="social-btn">
+        <span>✈</span> Telegram
+      </a>
+    </div>
+  </div>
+
+  <!-- BOOKING FORM -->
+  <div class="fcard">
+    <h3><span class="gold-text">Book Your Phone</span></h3>
+    <!-- EDIT: Replace YOUR_ACCESS_KEY_HERE with Web3Forms key -->
+    <form action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+      <input type="hidden" name="redirect" value="https://web3forms.com/success">
+      <div class="frow">
+        <div class="field"><label>First Name</label><input type="text" name="First Name" placeholder="Rahul" required></div>
+        <div class="field"><label>Last Name</label><input type="text" name="Last Name" placeholder="Sharma"></div>
+      </div>
+      <div class="field"><label>WhatsApp Number</label><input type="tel" name="Mobile" placeholder="10-digit number" required pattern="[0-9]{10}"></div>
+      <div class="field"><label>Selected Device</label><input type="text" name="Device" id="bookingDevice" placeholder="Click Book Now on any product" required></div>
+      <div class="frow">
+        <div class="field">
+          <label>Order Type</label>
+          <select name="Order Type">
+            <option>Retail (1 Unit)</option>
+            <option>Wholesale (Bulk)</option>
+          </select>
+        </div>
+        <div class="field"><label>Preferred Color</label><input type="text" name="Color" placeholder="e.g. Black Titanium"></div>
+      </div>
+      <div class="field"><label>Delivery Address / Notes</label><textarea name="Notes" rows="3" placeholder="Full address or special requirements…"></textarea></div>
+      <button type="submit" class="fsub">Submit Request Securely 🔒</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="fbrand">
+      <span class="logo-text"><span class="gold-text">R.S.</span> Electronics</span>
+      <p>Your most trusted destination for premium smartphones since 2014. Authorized dealer. Genuine products. Unbeatable prices. Retail & wholesale.</p>
+      <div class="fsocial">
+        <!-- EDIT: Replace links -->
+        <a href="https://instagram.com/YOUR_INSTAGRAM" target="_blank" class="fsoc-btn" title="Instagram">📸</a>
+        <a href="https://wa.me/919876543210" target="_blank" class="fsoc-btn" title="WhatsApp">💬</a>
+        <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="fsoc-btn" title="YouTube">▶</a>
+        <a href="https://facebook.com/YOUR_FACEBOOK" target="_blank" class="fsoc-btn" title="Facebook">📘</a>
+        <a href="https://t.me/YOUR_TELEGRAM" target="_blank" class="fsoc-btn" title="Telegram">✈</a>
+      </div>
+    </div>
+    <div class="fcol">
+      <h4>Brands</h4>
+      <ul>
+        <li><a href="#">Apple</a></li>
+        <li><a href="#">Samsung</a></li>
+        <li><a href="#">Vivo</a></li>
+        <li><a href="#">Oppo</a></li>
+        <li><a href="#">OnePlus</a></li>
+        <li><a href="#">Realme</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Retail Sale</a></li>
+        <li><a href="#">Wholesale</a></li>
+        <li><a href="#">0% EMI Plans</a></li>
+        <li><a href="#">Phone Exchange</a></li>
+        <li><a href="#">Repair Service</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Track Order</a></li>
+        <li><a href="#">Warranty Policy</a></li>
+        <li><a href="#">Return Policy</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <p>© 2025 R.S. Electronics. All rights reserved.</p>
+    <p>Crafted with ♥ for Premium Shoppers</p>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="toastIcon" style="font-size:17px">✅</span>
+  <span class="toast-txt" id="toastTxt"></span>
+</div>
+
+<!-- SCROLL TOP -->
+<button class="scrtop" id="scrtop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- =============================================
+     JAVASCRIPT
+     =============================================
+
+     *** HOW TO MODIFY PRODUCTS ***
+     Edit the PRODUCTS array below:
+     - name: Phone name
+     - brand: Apple / Samsung / Vivo / Oppo
+     - price: Current market price (number only)
+     - old: Strikethrough/MRP price
+     - img: Google Drive file ID (from share link)
+           Leave "" if no image — emoji shows instead
+     - badge: "new" or "hot" or "sale" or ""
+     - specs: Short spec line
+     - emoji: Shown when no image
+
+-->
+<script>
+/* =============================================
+   PRODUCT DATA — EDIT THIS SECTION
+   ============================================= */
+const PRODUCTS = [
+  /* ---- APPLE ---- */
+  {
+    id:1, brand:'Apple', name:'iPhone 16 Pro Max',
+    price:174900, old:184900,
+    img:'PHONE_IMG_GDRIVE_ID_1',  // ← Put your Google Drive image ID here
+    badge:'new', specs:'A18 Pro · 256GB · Titanium',
+    emoji:'📱', rating:4.9, reviews:218
+  },
+  {
+    id:2, brand:'Apple', name:'iPhone 16 Pro',
+    price:134900, old:149900,
+    img:'PHONE_IMG_GDRIVE_ID_2',  // ← Put your Google Drive image ID here
+    badge:'new', specs:'A18 Pro · 128GB · Desert Titanium',
+    emoji:'📱', rating:4.8, reviews:156
+  },
+  {
+    id:3, brand:'Apple', name:'iPhone 15 Pro Max',
+    price:139900, old:159900,
+    img:'PHONE_IMG_GDRIVE_ID_3',  // ← Put your Google Drive image ID here
+    badge:'', specs:'A17 Pro · 256GB · Natural Titanium',
+    emoji:'📱', rating:4.8, reviews:184
+  },
+  {
+    id:4, brand:'Apple', name:'iPhone 15',
+    price:79900, old:89900,
+    img:'PHONE_IMG_GDRIVE_ID_4',  // ← Put your Google Drive image ID here
+    badge:'sale', specs:'A16 Bionic · 128GB · Pink',
+    emoji:'📱', rating:4.7, reviews:96
+  },
+  /* ---- SAMSUNG ---- */
+  {
+    id:5, brand:'Samsung', name:'Galaxy S25 Ultra',
+    price:134999, old:149999,
+    img:'PHONE_IMG_GDRIVE_ID_5',  // ← Put your Google Drive image ID here
+    badge:'new', specs:'Snapdragon 8 Elite · 256GB · Titanium Black',
+    emoji:'📲', rating:4.9, reviews:143
+  },
+  {
+    id:6, brand:'Samsung', name:'Galaxy S25+',
+    price:99999, old:114999,
+    img:'PHONE_IMG_GDRIVE_ID_6',  // ← Put your Google Drive image ID here
+    badge:'new', specs:'Snapdragon 8 Elite · 256GB · Navy',
+    emoji:'📲', rating:4.8, reviews:87
+  },
+  {
+    id:7, brand:'Samsung', name:'Galaxy S24 Ultra',
+    price:109999, old:129999,
+    img:'PHONE_IMG_GDRIVE_ID_7',  // ← Put your Google Drive image ID here
+    badge:'sale', specs:'Snapdragon 8 Gen 3 · 256GB · Gray',
+    emoji:'📲', rating:4.8, reviews:201
+  },
+  {
+    id:8, brand:'Samsung', name:'Galaxy A55',
+    price:39999, old:44999,
+    img:'PHONE_IMG_GDRIVE_ID_8',  // ← Put your Google Drive image ID here
+    badge:'hot', specs:'Exynos 1480 · 128GB · Ice Blue',
+    emoji:'📲', rating:4.5, reviews:77
+  },
+  /* ---- VIVO ---- */
+  {
+    id:9, brand:'Vivo', name:'Vivo X200 Pro',
+    price:94999, old:99999,
+    img:'PHONE_IMG_GDRIVE_ID_9',  // ← Put your Google Drive image ID here
+    badge:'new', specs:'Dimensity 9400 · 256GB · Titanium',
+    emoji:'📳', rating:4.8, reviews:62
+  },
+  {
+    id:10, brand:'Vivo', name:'Vivo V40 Pro',
+    price:44999, old:49999,
+    img:'PHONE_IMG_GDRIVE_ID_10', // ← Put your Google Drive image ID here
+    badge:'', specs:'Snapdragon 7 Gen 3 · 256GB · Lotus Purple',
+    emoji:'📳', rating:4.6, reviews:54
+  },
+  /* ---- OPPO ---- */
+  {
+    id:11, brand:'Oppo', name:'Oppo Find X8 Pro',
+    price:89999, old:99999,
+    img:'PHONE_IMG_GDRIVE_ID_11', // ← Put your Google Drive image ID here
+    badge:'hot', specs:'Dimensity 9400 · 256GB · Silver Satin',
+    emoji:'📴', rating:4.7, reviews:48
+  },
+  {
+    id:12, brand:'Oppo', name:'Oppo Reno 13 Pro',
+    price:42999, old:47999,
+    img:'PHONE_IMG_GDRIVE_ID_12', // ← Put your Google Drive image ID here
+    badge:'', specs:'Dimensity 8350 · 128GB · Midnight Grey',
+    emoji:'📴', rating:4.5, reviews:39
+  },
+];
+
+/* =============================================
+   HELPERS
+   ============================================= */
+const INR = n => '₹' + n.toLocaleString('en-IN');
+const bdg = {new:'new',hot:'hot',sale:'sale'};
+const wish = new Set();
+let cur = [...PRODUCTS];
+let slideIdx = 0;
+const TOTAL_SLIDES = 4;
+
+/* =============================================
+   GOOGLE DRIVE IMAGE HELPER
+   ============================================= */
+function gdrive(id) {
+  if (!id || id.includes('GDRIVE_ID') || id.includes('PHONE_IMG') || id === '') return '';
+  return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w400';
+}
+
+/* =============================================
+   PRODUCT RENDER
+   ============================================= */
+function renderGrid(list) {
+  const g = document.getElementById('pgrid');
+  g.innerHTML = '';
+  if (!list.length) {
+    g.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:60px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--muted)">NO PRODUCTS FOUND</p>';
+    return;
+  }
+  list.forEach((p, i) => {
+    const imgSrc = gdrive(p.img);
+    const d = document.createElement('div');
+    d.className = 'pcard';
+    d.setAttribute('data-brand', p.brand);
+    d.setAttribute('data-price', p.price);
+    const stars = '★'.repeat(Math.floor(p.rating)) + '☆'.repeat(5 - Math.floor(p.rating));
+    const isWished = wish.has(p.id);
+    d.innerHTML = `
+      ${p.badge ? `<div class="pbadge ${p.badge}">${p.badge.toUpperCase()}</div>` : ''}
+      <button class="pwish ${isWished?'on':''}" id="w${p.id}" onclick="toggleWish(${p.id})">${isWished?'❤️':'🤍'}</button>
+      <div class="pimg">
+        ${imgSrc
+          ? `<img src="${imgSrc}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><div class="emoji-ph" style="display:none">${p.emoji}</div>`
+          : `<div class="emoji-ph">${p.emoji}</div>`
+        }
+      </div>
+      <div class="pinfo">
+        <div class="pbrand">${p.brand}</div>
+        <div class="pname">${p.name}</div>
+        <div class="pspecs">${p.specs}</div>
+        <div class="prating"><span class="stars">${stars}</span><span class="rcount">${p.rating} (${p.reviews})</span></div>
+      </div>
+      <div class="pfoot">
+        <div class="pprice-box">
+          <div class="pprice"><span class="gold-text">${INR(p.price)}</span></div>
+          <div class="pold">${INR(p.old)}</div>
+        </div>
+        <button class="pbuy" onclick="bookNow('${p.name}')">Book Now</button>
+      </div>`;
+    g.appendChild(d);
+    setTimeout(() => d.classList.add('reveal','in'), i * 55);
+  });
+  observeReveal();
+}
+
+/* =============================================
+   FILTER
+   ============================================= */
+function filterBrand(brand, btn) {
+  document.querySelectorAll('.pill').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  cur = brand === 'All' ? [...PRODUCTS] : PRODUCTS.filter(p => p.brand === brand);
+  const s = document.querySelector('.sort-sel');
+  if (s) sortProducts(s.value, true);
+  else renderGrid(cur);
+}
+
+/* =============================================
+   SORT
+   ============================================= */
+function sortProducts(val, skip) {
+  const a = [...cur];
+  if (val === 'asc') a.sort((x,y) => x.price - y.price);
+  if (val === 'desc') a.sort((x,y) => y.price - x.price);
+  cur = a;
+  renderGrid(cur);
+}
+
+/* =============================================
+   SEARCH
+   ============================================= */
+function searchProducts() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  renderGrid(PRODUCTS.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q)));
+}
+
+/* =============================================
+   BOOK NOW
+   ============================================= */
+function bookNow(name) {
+  document.getElementById('bookingDevice').value = name;
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+  showToast(`📱 "${name}" selected!`, '📱');
+}
+
+/* =============================================
+   WISHLIST
+   ============================================= */
+function toggleWish(id) {
+  const el = document.getElementById('w' + id);
+  if (wish.has(id)) { wish.delete(id); el.innerHTML='🤍'; el.classList.remove('on'); showToast('Removed from wishlist','💔'); }
+  else { wish.add(id); el.innerHTML='❤️'; el.classList.add('on'); showToast('Added to wishlist!','❤️'); }
+}
+
+/* =============================================
+   HERO SLIDER
+   ============================================= */
+let autoSlideTimer;
+
+function goSlide(n) {
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  slides[slideIdx].classList.remove('active');
+  dots[slideIdx].classList.remove('on');
+  slideIdx = (n + TOTAL_SLIDES) % TOTAL_SLIDES;
+  slides[slideIdx].classList.add('active');
+  dots[slideIdx].classList.add('on');
+}
+
+function moveSlide(dir) {
+  goSlide(slideIdx + dir);
+  resetAutoSlide();
+}
+
+function startAutoSlide() {
+  autoSlideTimer = setInterval(() => goSlide(slideIdx + 1), 4500);
+}
+
+function resetAutoSlide() {
+  clearInterval(autoSlideTimer);
+  startAutoSlide();
+}
+
+/* =============================================
+   TOAST
+   ============================================= */
+function showToast(msg, icon) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastTxt').textContent = msg;
+  document.getElementById('toastIcon').textContent = icon || '✅';
+  t.classList.add('on');
+  clearTimeout(window._tt);
+  window._tt = setTimeout(() => t.classList.remove('on'), 2800);
+}
+
+/* =============================================
+   SCROLL
+   ============================================= */
+window.addEventListener('scroll', () => {
+  document.getElementById('scrtop').classList.toggle('on', window.scrollY > 400);
+});
+
+/* =============================================
+   REVEAL ON SCROLL
+   ============================================= */
+function observeReveal() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+}
+
+/* =============================================
+   HAMBURGER
+   ============================================= */
+function toggleMenu() {
+  const nl = document.querySelector('.nav-links');
+  if (!nl) return;
+  const open = nl.style.display === 'flex';
+  nl.style.cssText = open ? '' : 'display:flex;flex-direction:column;position:fixed;top:68px;right:0;background:rgba(11,10,8,.97);padding:20px 28px;gap:20px;border-left:1px solid var(--rule);border-bottom:1px solid var(--rule);z-index:599;backdrop-filter:blur(16px)';
+}
+
+/* =============================================
+   LOADER
+   ============================================= */
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('gone'), 2100);
+});
+
+/* =============================================
+   INIT
+   ============================================= */
+renderGrid(PRODUCTS);
+observeReveal();
+startAutoSlide();
+</script>
+</body>
+</html>
