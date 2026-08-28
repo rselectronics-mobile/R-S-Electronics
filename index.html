@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#05070b">
+<meta name="description" content="R.S. Electronics — premium mobile store, Lakhimpur Kheri.">
+<title>R.S. Electronics — Premium V5</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="loader"><div class="loader-rs">RS<span>•</span></div><div class="loader-bar"><i></i></div><small>CONNECTING STORE</small></div>
+<div class="progress" id="progress"></div>
+
+<header class="nav">
+<a class="logo" href="#home"><span class="mark">RS</span><span><b>R.S. ELECTRONICS</b><small>TECHNOLOGY MEETS TRUST</small></span></a>
+<nav id="nav"><a href="#home">Home</a><a href="#products">Mobiles</a><a href="#brands">Brands</a><a href="#offers">Offers</a><a href="#tools">Tools</a><a href="#booking">Booking</a><a href="#admin">Admin</a><a href="#contact">Contact</a></nav>
+<div class="nav-right"><a href="tel:+918858616632" class="nav-call">☎ Call</a><button id="menuBtn" class="icon-btn">☰</button></div>
+</header>
+
+<main>
+<section class="hero" id="home">
+<div class="hero-copy reveal"><div class="eyebrow"><span></span> LAKHIMPUR KHERI • OPEN 9:00 AM — 10:00 PM</div>
+<h1>Technology<br><em>meets trust.</em></h1>
+<p>Premium smartphones, genuine deals and personal assistance — retail and wholesale.</p>
+<div class="hero-actions"><a class="btn primary" href="#products">Shop mobiles <b>→</b></a><a class="btn glass" href="#booking">Book a phone</a></div>
+<div class="trust-row"><span>✓ Genuine products</span><span>✓ Wholesale rates</span><span>✓ Exchange & EMI</span></div></div>
+<div class="hero-stage reveal"><div class="halo"></div><div class="ring ring1"></div><div class="ring ring2"></div><div class="device"><div class="dynamic-island"></div><div class="device-screen"><small>R.S. ELECTRONICS</small><strong>XIAOMI</strong><span>SMARTER<br>EVERY DAY</span><i>01</i></div></div><div class="floating-card one"><small>FEATURED</small><b>XIAOMI</b><span>01</span></div><div class="floating-card two"><small>STORE</small><b>9 AM — 10 PM</b><span>OPEN</span></div></div>
+</section>
+
+<div class="marquee"><div>NEW LAUNCHES ✦ BEST DEALS ✦ EMI AVAILABLE ✦ EXCHANGE ✦ WHOLESALE ✦ RETAIL ✦</div></div>
+
+<section class="section" id="products">
+<div class="section-top"><div><div class="eyebrow">LIVE STORE CATALOGUE</div><h2>Find your <em>next phone.</em></h2></div><p class="muted" id="connectionStatus">Store catalogue loading…</p></div>
+<div class="catalog-tools"><input id="productSearch" placeholder="⌕ Search model..."><select id="productBrand"><option value="">All brands</option></select><select id="priceFilter"><option value="">Any price</option><option value="15000">Under ₹15,000</option><option value="25000">Under ₹25,000</option><option value="40000">Under ₹40,000</option><option value="99999999">All prices</option></select><button id="clearFilters">Clear</button></div>
+<div class="product-grid" id="productGrid"></div></section>
+
+<section class="section" id="brands"><div class="section-top"><div><div class="eyebrow">THE ECOSYSTEM</div><h2>Every major brand.<br><em>One destination.</em></h2></div><div class="search-wrap"><span>⌕</span><input id="brandSearch" placeholder="Search brands..."></div></div><div class="featured-brand"><div><small>01 · FEATURED FIRST</small><b>XIAOMI</b><span>Latest phones & deals</span></div><strong>↗</strong></div><div class="brand-grid" id="brandGrid"></div></section>
+
+<section class="section" id="offers"><div class="section-top"><div><div class="eyebrow">LIVE OFFERS</div><h2>Today's <em>deals.</em></h2></div></div><div class="offer-grid" id="offerGrid"></div></section>
+
+<section class="section tools" id="tools"><div class="section-top"><div><div class="eyebrow">SMART TOOLS</div><h2>Plan your <em>purchase.</em></h2></div></div>
+<div class="tool-grid"><div class="tool-card"><div class="tool-icon">₹</div><h3>EMI Calculator</h3><p>Estimate monthly payment from price, down payment, rate and tenure.</p><div class="calc-row"><label>Phone price<input id="price" type="number" value="20000"></label><label>Down payment<input id="down" type="number" value="5000"></label></div><div class="calc-row"><label>Annual rate %<input id="rate" type="number" value="12"></label><label>Months<input id="months" type="number" value="12"></label></div><div class="result"><small>ESTIMATED MONTHLY EMI</small><b id="emi">₹1,332</b></div></div>
+<div class="tool-card"><div class="tool-icon">↻</div><h3>Exchange Guide</h3><p>Indicative only. Final value depends on inspection.</p><select id="exchange"><option value="excellent">Excellent condition</option><option value="good">Good condition</option><option value="fair">Fair condition</option></select><input id="oldPrice" type="number" value="15000" placeholder="Current estimated market value"><div class="result"><small>INDICATIVE EXCHANGE RANGE</small><b id="exchangeResult">₹10,500 – ₹12,750</b></div></div></div></section>
+
+<section class="section booking" id="booking"><div class="section-top"><div><div class="eyebrow">FAST REQUEST</div><h2>Tell us what<br><em>you need.</em></h2></div><p class="muted">Enquiries are sent to the connected store backend.</p></div>
+<form id="bookingForm"><label>Name<input id="custName" required placeholder="Your full name"></label><label>Phone<input id="custPhone" required inputmode="tel" placeholder="10 digit mobile number"></label><label>Brand<select id="custBrand" required><option value="">Select brand</option></select></label><label>Model / Requirement<input id="custModel" required placeholder="Model"></label><label>Requirement<select id="custReq"><option>Retail — 1 piece</option><option>Wholesale — bulk</option><option>Exchange</option><option>EMI / Finance</option></select></label><label>Budget<input id="custBudget" type="number" placeholder="Approx. budget"></label><label class="full">Message<textarea id="custMsg" rows="4" placeholder="RAM/storage, colour, quantity..."></textarea></label><div class="form-buttons full"><button class="btn primary" type="submit">Send enquiry →</button><a class="btn whatsapp" id="whatsappBtn" target="_blank" rel="noopener">WhatsApp ↗</a></div></form><div id="formStatus" class="form-status"></div></section>
+
+<section class="section admin" id="admin">
+<div class="section-top"><div><div class="eyebrow">SECURE OWNER CONSOLE</div><h2>Manage your <em>store.</em></h2></div><p class="muted" id="adminStatus">Login required for store management.</p></div>
+<div id="loginPanel" class="admin-panel"><div class="admin-form"><input id="adminEmail" type="email" placeholder="Owner email"><input id="adminPassword" type="password" placeholder="Password"><button class="btn primary" id="loginBtn">Login</button><button class="btn glass" id="signupBtn">Create account</button></div><p class="muted admin-note">First-time setup: create the owner account in your connected backend, then use Login. Do not put passwords in this HTML.</p></div>
+<div id="consolePanel" class="hidden">
+<div class="admin-tabs"><button class="active" data-tab="dashboard">Dashboard</button><button data-tab="productsAdmin">Products</button><button data-tab="enquiries">Enquiries</button><button data-tab="offersAdmin">Offers</button></div>
+<div id="dashboard" class="admin-panel"><div class="dash-grid"><div><small>PRODUCTS</small><b id="dashProducts">0</b></div><div><small>STOCK UNITS</small><b id="dashStock">0</b></div><div><small>ENQUIRIES</small><b id="dashEnquiries">0</b></div><div><small>OFFERS</small><b id="dashOffers">0</b></div></div><div class="admin-actions"><button class="btn primary" id="logoutBtn">Logout</button><button class="btn glass" id="seedBtn">Load Demo Products</button></div></div>
+<div id="productsAdmin" class="admin-panel hidden"><div class="admin-form"><input id="invModel" placeholder="Model name"><input id="invBrand" placeholder="Brand"><input id="invPrice" type="number" placeholder="Price"><input id="invStock" type="number" placeholder="Stock"><input id="invMeta" placeholder="Short description"><button class="btn primary" id="addStock">Add product</button></div><div class="stock-list" id="stockList"></div></div>
+<div id="enquiries" class="admin-panel hidden"><div class="admin-actions"><button class="btn primary" id="exportEnquiries">Export CSV</button></div><div class="stock-list" id="enquiryList"></div></div>
+<div id="offersAdmin" class="admin-panel hidden"><div class="admin-form"><input id="offerTitle" placeholder="Offer title"><input id="offerText" placeholder="Offer description"><select id="offerTone"><option value="orange">Orange</option><option value="blue">Blue</option><option value="purple">Purple</option></select><button class="btn primary" id="addOffer">Add offer</button></div><div class="stock-list" id="offerList"></div></div>
+</div></section>
+
+<section class="section why"><div class="section-top"><div><div class="eyebrow">WHY R.S. ELECTRONICS</div><h2>A better way<br>to <em>shop tech.</em></h2></div></div><div class="why-grid"><div><b>01</b><h3>Personal assistance</h3><p>Tell us your budget and requirement; get practical guidance.</p></div><div><b>02</b><h3>Retail + wholesale</h3><p>One destination for individual buyers and bulk requirements.</p></div><div><b>03</b><h3>Exchange support</h3><p>Bring your old device for an inspection-based exchange discussion.</p></div><div><b>04</b><h3>Easy contact</h3><p>Call, WhatsApp or email directly from the website.</p></div></div></section>
+
+<section class="contact" id="contact"><div><div class="eyebrow">COME VISIT</div><h2>R.S. Electronics</h2><p>Owner: <b>Vinay Maurya</b><br>Roadways Bus Adda ke Pass,<br>Lakhimpur Kheri, Uttar Pradesh</p><div class="hours">OPEN DAILY <b>9:00 AM — 10:00 PM</b></div></div><div class="contact-links"><a href="tel:+918858616632"><small>CALL</small><b>8858616632</b><span>Tap to call →</span></a><a href="mailto:ravikashyap5125r@gmail.com"><small>EMAIL</small><b>ravikashyap5125r@gmail.com</b><span>Send an enquiry →</span></a><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Roadways+Bus+Adda+Lakhimpur+Kheri"><small>LOCATION</small><b>Roadways Bus Adda</b><span>Get directions →</span></a></div></section>
+</main>
+<footer><div><b>R.S. ELECTRONICS</b><small>Technology Meets Trust.</small></div><p>© 2026 R.S. Electronics · Owner: Vinay Maurya</p></footer>
+<a class="float-btn call-float" href="tel:+918858616632">☎</a><a class="float-btn wa-float" href="https://wa.me/918858616632" target="_blank" rel="noopener">◈</a>
+<script type="module" src="script.js"></script>
+</body></html>
